@@ -49,4 +49,32 @@ public class BerlinClockServiceTest {
 
         assertEquals("RRRR",result);
     }
+
+    @Test
+    void shouldReturnThreeRedLampsForThreeHours() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneHourRow(3);
+
+        assertEquals("RRRO", result);
+    }
+
+    @Test
+    void shouldReturnOneRedLampForSixHours() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneHourRow(6);
+
+        assertEquals("ROOO", result);
+    }
+
+    @Test
+    void shouldReturnThreeRedLampsForTwentyThreeHours() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneHourRow(23);
+
+        assertEquals("RRRO", result);
+    }
+
 }

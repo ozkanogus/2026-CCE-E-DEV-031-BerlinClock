@@ -14,4 +14,13 @@ public class BerlinClockService {
         }
         return row.toString();
     }
+
+    public String getOneHourRow(int hours){
+        int onLamps = hours % 5;
+        StringBuilder row = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            row.append(i < onLamps ? "R" : "O");
+        }
+        return row.toString();
+    }
 }
