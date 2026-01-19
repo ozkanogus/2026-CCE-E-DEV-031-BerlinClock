@@ -23,4 +23,23 @@ public class BerlinClockService {
         }
         return row.toString();
     }
+
+    public String getFiveMinutesRow(int minutes) {
+        int onLamps = minutes / 5;
+
+        StringBuilder row = new StringBuilder();
+        for (int i = 1; i <= 11; i++) {
+            if (i <= onLamps) {
+                if (i % 3 == 0) {
+                    row.append("R");
+                } else {
+                    row.append("Y");
+                }
+            } else {
+                row.append("O");
+            }
+        }
+        return row.toString();
+    }
+
 }

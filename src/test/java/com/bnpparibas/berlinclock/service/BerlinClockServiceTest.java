@@ -77,4 +77,31 @@ public class BerlinClockServiceTest {
         assertEquals("RRRO", result);
     }
 
+    @Test
+    void shouldReturnAllOffForZeroMinutesInFiveMinutesRow() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getFiveMinutesRow(0);
+
+        assertEquals("OOOOOOOOOOO", result);
+    }
+
+    @Test
+    void shouldReturnHalfHourPatternForThirtyMinutes() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getFiveMinutesRow(30);
+
+        assertEquals("YYRYYROOOOO", result);
+    }
+
+    @Test
+    void shouldReturnFullPatternForFiftyNineMinutes() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getFiveMinutesRow(59);
+
+        assertEquals("YYRYYRYYRYY", result);
+    }
+
 }
