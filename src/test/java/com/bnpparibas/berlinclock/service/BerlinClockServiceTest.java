@@ -104,4 +104,50 @@ public class BerlinClockServiceTest {
         assertEquals("YYRYYRYYRYY", result);
     }
 
+    @Test
+    void shouldReturnAllOffForZeroMinutesInOneMinuteRow() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneMinuteRow(0);
+
+        assertEquals("OOOO", result);
+    }
+
+    @Test
+    void shouldReturnOneLampOnForOneMinute() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneMinuteRow(1);
+
+        assertEquals("YOOO", result);
+    }
+
+    @Test
+    void shouldReturnAllOnForFourMinutes() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneMinuteRow(4);
+
+        assertEquals("YYYY", result);
+    }
+
+    @Test
+    void shouldResetAfterFiveMinutes() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneMinuteRow(5);
+
+        assertEquals("OOOO", result);
+    }
+
+    @Test
+    void shouldReturnCorrectPatternForSeventeenMinutes() {
+        BerlinClockService service = new BerlinClockService();
+
+        String result = service.getOneMinuteRow(17);
+
+        assertEquals("YYOO", result);
+    }
+
+
 }

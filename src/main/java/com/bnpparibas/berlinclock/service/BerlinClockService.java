@@ -42,4 +42,19 @@ public class BerlinClockService {
         return row.toString();
     }
 
+    public String getOneMinuteRow(int minutes) {
+        int onLamps = minutes % 5;
+
+        StringBuilder row = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            if (i < onLamps) {
+                row.append("Y");
+            } else {
+                row.append("O");
+            }
+        }
+        return row.toString();
+    }
+
+
 }
