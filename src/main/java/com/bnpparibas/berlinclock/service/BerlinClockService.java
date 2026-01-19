@@ -1,5 +1,8 @@
 package com.bnpparibas.berlinclock.service;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class BerlinClockService {
 
     public String getSecondsLamp(int seconds) {
