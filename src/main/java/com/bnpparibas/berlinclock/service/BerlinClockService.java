@@ -11,35 +11,22 @@ public class BerlinClockService {
 
     public String getFiveHoursRow(int hours){
         int onLamps = hours / 5;
-        StringBuilder row = new StringBuilder();
-        for(int i=0;i<4;i++){
-            row.append(i < onLamps ? "R" : "0");
-        }
-        return row.toString();
+        return "R".repeat(onLamps) + "0".repeat(4-onLamps);
     }
 
     public String getOneHourRow(int hours){
         int onLamps = hours % 5;
-        StringBuilder row = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            row.append(i < onLamps ? "R" : "O");
-        }
-        return row.toString();
+        return "R".repeat(onLamps) + "0".repeat(4-onLamps);
     }
 
     public String getFiveMinutesRow(int minutes) {
         int onLamps = minutes / 5;
-
         StringBuilder row = new StringBuilder();
-        for (int i = 1; i <= 11; i++) {
-            if (i <= onLamps) {
-                if (i % 3 == 0) {
-                    row.append("R");
-                } else {
-                    row.append("Y");
-                }
+        for (int i = 0; i < 11; i++) {
+            if (i < onLamps) {
+                row.append((i+1) % 3 == 0 ? "R" : "Y");
             } else {
-                row.append("O");
+                row.append("0");
             }
         }
         return row.toString();
@@ -47,17 +34,6 @@ public class BerlinClockService {
 
     public String getOneMinuteRow(int minutes) {
         int onLamps = minutes % 5;
-
-        StringBuilder row = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            if (i < onLamps) {
-                row.append("Y");
-            } else {
-                row.append("O");
-            }
-        }
-        return row.toString();
+        return "Y".repeat(onLamps) + "0".repeat(4-onLamps);
     }
-
-
 }
