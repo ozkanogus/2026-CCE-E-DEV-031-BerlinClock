@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 500,
                 "Internal Server Error",
-                "Unexpected error hoccurred",
+                "Unexpected error occurred",
                 Instant.now()
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
