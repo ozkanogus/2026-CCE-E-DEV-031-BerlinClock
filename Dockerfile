@@ -1,15 +1,18 @@
-# Base image
-FROM eclipse-temurin:21-jdk-alpine
+# syntax=docker/dockerfile:1.7
+FROM eclipse-temurin:21-jdk-alpine AS build
+WORKDIR /workspace
+COPY gradle gradle
+COPY gradlew settings.gradle build.gradle ./
+RUN --mount=type=cache,target=/root/.gradle ./gradlew --no-daemon dependencies
+COPY src src
+RUN --mount=type=cache,target=/root/.gradle ./gradlew --no-daemon clean bootJar
 
-# Set working directory
+FROM eclipse-temurin:21-jre-alpine
+RUN addgroup -S app && adduser -S app -G app
 WORKDIR /app
-
-# Copy build files
-COPY build/libs/*.jar app.jar
-
-# Expose port
+COPY --from=build --chown=app:app /workspace/build/libs/*.jar app.jar
+USER app
 EXPOSE 8080
-
-# Run the application
-ENTRYPOINT ["java","-jar","app.jar"]
-
+HEALTHCHECK --interval=30s --timeout=3s --start-period=20s --retries=3 \
+  CMD wget -q -O - http://localhost:8080/actuator/health >/dev/null || exit 1
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

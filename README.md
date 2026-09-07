@@ -14,8 +14,8 @@ This project is implemented as part of a technical coding exercise and demonstra
 
 ## Tech Stack
 - Java 21
-- Spring Boot 3.x
-- Gradle
+- Spring Boot 4.1.1
+- Gradle 9.7.1
 - JUnit 5 
 - Springdoc OpenAPI UI (Swagger)
 - Docker
@@ -23,24 +23,32 @@ This project is implemented as part of a technical coding exercise and demonstra
 
 ## Requirements
 - JDK 21 (any OpenJDK distribution)
-- Gradle 8+ 
+- The included Gradle Wrapper
 
 ## Build
 Clone the repository and run:
 
-```./gradlew clean build```
+```bash
+./gradlew clean build
+```
 
 ## Run
-```./gradlew bootRun```
+```bash
+./gradlew bootRun
+```
 
 ## Build image
-```docker build -t berlin-clock .```
+```bash
+docker build -t berlin-clock .
+```
 
 ## API Documentation (Swagger)
 http://localhost:8080/swagger-ui/index.html
 
 ## Example Request
-```curl -X GET "http://localhost:8080/api/berlin-clock?time=13:17:01"```
+```bash
+curl "http://localhost:8080/api/berlin-clock?time=13:17:01"
+```
 
 ## Example Response
 ```
@@ -51,3 +59,18 @@ http://localhost:8080/swagger-ui/index.html
   "fiveMinutes": "YYR00000000",
   "oneMinute": "YY00"
 }
+```
+
+## Architecture
+
+```mermaid
+flowchart LR
+    Client[API client] --> Controller[Berlin Clock controller]
+    Controller --> Parser[Strict LocalTime parser]
+    Parser --> Service[Clock conversion service]
+    Service --> Response[Five lamp-row response]
+    Parser -->|invalid HH:mm:ss| Error[HTTP 400 error contract]
+```
+
+The service is stateless. GitHub Actions verifies the Java 21 test suite and
+builds the non-root container image on modernization pushes and pull requests.
